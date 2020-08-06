@@ -22,11 +22,11 @@ class Owner
   end
 
   def self.count
-    @@all.length
+    @@all.length #could be .count for more flexibility in future.
   end
 
   def self.reset_all
-    Owner.all.clear
+    Owner.all.clear #self.all wouldn't break if class is renamed?
   end
 
   #Instance Methods
@@ -44,11 +44,13 @@ class Owner
   end
 
   def buy_cat(name)
-    cat = Cat.new(name, self)
+    #cat =
+    Cat.new(name, self) #kill the "cat" variable
   end
 
   def buy_dog(name)
-    dog = Dog.new(name, self)
+    #dog = 
+    Dog.new(name, self) #kill the "dog" variable
   end
 
   def walk_dogs
@@ -77,7 +79,24 @@ class Owner
     "I have #{dogs.count} dog(s), and #{cats.count} cat(s)."
   end
 
+  def happy_or_sad
+    count = 0
+    pets.each do |pet|
+      if pet.mood == "happy"
+        count +=1
+      elsif pet.mood == "nervous"
+        count -=1
+      end
+    end
+    count > 0 ? "We're all good." : "We're nervous!"
+  end
 
-
+  def aver_age
+    total_age = self.pets.sum{|pet| pet.age}.to_f
+    size = self.pets.count.to_f
+    total_age / size 
+  end
 
 end
+
+#binding.pry
